@@ -35,35 +35,37 @@ Try {
     $Settings = Get-Content -Path $SettingsFilePath | ConvertFrom-Json
 }
 Catch {
-    write-host -f Red "Error reading appsettings.json. Ensure it exists." $_.Exception.Message
+    Write-Host -f Red "Error reading appsettings.json. Ensure it exists." $_.Exception.Message
     Exit
 }
 
 # Must be a Multi-Tenant App Registration
 $ClientId = $Settings.ClientId
-write-host -f Yellow "Client ID: $ClientId"
+Write-Host -f Yellow "Client ID: $ClientId"
 
 # Site to Export from
 $SourceSiteURL = $Settings.ExportSettings.SourceSiteURL
-write-host -f Yellow "SourceSiteURL: $SourceSiteURL"
+Write-Host -f Yellow "SourceSiteURL: $SourceSiteURL"
 
 # True or False
 $IncludeData = $Settings.ExportSettings.IncludeData
-write-host -f Yellow "IncludeData: $IncludeData"
+Write-Host -f Yellow "IncludeData: $IncludeData"
 
 # Array of List Names to Export
 $ListsToExport = $Settings.ExportSettings.ListsToExport
-write-host -f Yellow "ListsToExport: $ListsToExport"
+Write-Host -f Yellow "ListsToExport: $ListsToExport"
 
 # File name excluding the path and extension
 $ExportFileName = $Settings.ExportSettings.ExportFileName
-write-host -f Yellow "ExportFileName: $ExportFileName"
+Write-Host -f Yellow "ExportFileName: $ExportFileName"
 
-write-host -f Green "Successfully loaded appsettings.json"
+Write-Host -f Green "Successfully loaded appsettings.json"
 
 # ===========================
 # Exporting Lists and Data
 # ===========================
+
+Write-Host -f Yellow "Prompting for login."
 
 Connect-PnPOnline -Url $SourceSiteURL -Interactive -ClientId $ClientId
 $Context  = Get-PnPContext
@@ -83,23 +85,24 @@ Function ExportLists {
         Write-Host -f Green "Lists Schema successfully extracted."
 
         If ($IncludeData) {
-            Write-Host -f Yellow "Starting Data export for Lists provided."
+            Write-Host -f Yellow "Starting data export for Lists provided."
             foreach ($List in $Lists) {
                 Write-Host -f Yellow "Exporting Data for '$List'."
                 Add-PnPDataRowsToSiteTemplate -Path $TemplatePath -List $List
                 Write-Host -f Green "Data for '$List' successfully exported."
             }
-            Write-Host -f Green "All Lists Data has been successfully exported."
+            Write-Host -f Green "Successfully exported all Lists data."           
         }
     }
     Catch {
-        write-host -f Red "Error saving Lists as a template." $_.Exception.Message
+        Write-Host -f Red "Error saving Lists as a template." $_.Exception.Message
         Exit
     }
+
+    Write-Host -f Green "All Lists have been successfully exported to '$TemplatePath'"
 }
 
 ExportLists $ListsToExport $ExportFileName $IncludeData
 
-Write-Host -f Green "All Lists have been successfully exported to '$OutputFolder/$ExportFileName.$ExtensionType'"
 
 Disconnect-PnPOnline
