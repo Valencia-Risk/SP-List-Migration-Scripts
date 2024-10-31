@@ -99,4 +99,4 @@ Function ExportLists {
 
 ExportLists $ListsToExport $ExportFileName $IncludeData
 
-Write-Host -f Green "All Lists have been successfully exported to '$OutputFolder/$ExportFileName.$ExtensionType"
+Write-Host -f Green "All Lists have been successfully exported to '$OutputFolder/$ExportFileName.$ExtensionType'"
