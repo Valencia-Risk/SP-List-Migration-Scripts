@@ -2,7 +2,7 @@
 Simple PowerShell Scripts to Import/Export Lists using PnP Provisioning's Site Templates. Useful for Tenant migrations.
 These use the modern SharePoint solution for templating, Site Templates. Instead of the old SharePoint method of App Templates (.stp file).
 
-Data can be optionally included. 
+Data can be optionally exported using the `IncludeData` export setting in `appsettings.json`.
 
 ## Configuration
 
