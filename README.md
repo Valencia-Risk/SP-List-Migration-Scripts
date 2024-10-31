@@ -4,6 +4,19 @@ PnP Provisioning uses the modern SharePoint solution for templating, Site Templa
 
 Data can be optionally exported using the `IncludeData` export setting in `appsettings.json`.
 
+## Features
+
+- Export an array of Lists and Data (optional) from SharePoint on one Tenant.
+- Import Lists and Data (if included) to SharePoint on the same Tenant or another.
+
+## Important Note on Importing
+
+**TLDR:** Destination's existing rows will **not** be replaced or merged. New or missing rows **will** be added to an existing List.
+
+Imported lists will be applied on top of any Lists on the destination that share the same name, but it will preserve rows that existed before based on Unique column requirements. For example, ID 23 exists on Destination already, but the template also includes ID 23. As ID is **unique**, the new (from template) row violates this rule and is dropped, not merged.
+
+However, any new rows that don't violate **unique** rules will be added to an existing List.
+
 ## Configuration
 
 ### Prerequisites
@@ -47,9 +60,18 @@ These steps are necessary to ensure the application has the required permissions
 
 To run the scripts, use the following command in your PowerShell terminal:
 
-### Export SharePoint List
+### Export SharePoint Lists
 The script will use the settings defined in the `appsettings.json` file. Therefore, ensure the correct List Names and Source URL are configured in `appsettings.json`.
 
 ```powershell
 ./ExportList.ps1
+```
+
+### Import SharePoint Lists
+The script will use the settings defined in the `appsettings.json` file. Therefore, ensure the correct Destination URL and ImportFilePath are configured in `appsettings.json`.
+
+This will use a PnP Template, either .xml or .pnp file types. Ensure the template exists at the location specified in `appsettings.json`.
+
+```powershell
+./ImportList.ps1
 ```
