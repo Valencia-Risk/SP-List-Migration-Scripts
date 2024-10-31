@@ -6,8 +6,13 @@ Data can be optionally exported using the `IncludeData` export setting in `appse
 
 ## Features
 
-- Export an array of Lists and Data (optional) from SharePoint on one Tenant.
-- Import Lists and Data (if included) to SharePoint on the same Tenant or another.
+- [x] Export an array of Lists and Data (optional) from **one** SharePoint Site.
+- [x] Import Lists and Data (if included) to **one** SharePoint Site on the same Tenant or another Tenant.
+
+### Needs Developing
+
+- [ ] Combined export-to-import automation for migrating lists.
+- [ ] Rename lists on import/export.
 
 ## Important Note on Importing
 
@@ -61,14 +66,14 @@ These steps are necessary to ensure the application has the required permissions
 To run the scripts, use the following command in your PowerShell terminal:
 
 ### Export SharePoint Lists
-The script will use the settings defined in the `appsettings.json` file. Therefore, ensure the correct List Names and Source URL are configured in `appsettings.json`.
+The script will use the settings defined in the `appsettings.json` file. Therefore, ensure the correct **List Names** and **Source URL** are configured in `appsettings.json`.
 
 ```powershell
 ./ExportList.ps1
 ```
 
 ### Import SharePoint Lists
-The script will use the settings defined in the `appsettings.json` file. Therefore, ensure the correct Destination URL and ImportFilePath are configured in `appsettings.json`.
+The script will use the settings defined in the `appsettings.json` file. Therefore, ensure the correct **Destination URL** and **ImportFilePath** are configured in `appsettings.json`.
 
 This will use a PnP Template, either .xml or .pnp file types. Ensure the template exists at the location specified in `appsettings.json`.
 
