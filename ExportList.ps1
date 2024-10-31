@@ -32,7 +32,7 @@ $OutputFolder = "data"
 
 Try {
     # Load Settings from Json
-    $settings = Get-Content -Path $SettingsFilePath | ConvertFrom-Json
+    $Settings = Get-Content -Path $SettingsFilePath | ConvertFrom-Json
 }
 Catch {
     write-host -f Red "Error reading appsettings.json. Ensure it exists." $_.Exception.Message
@@ -65,7 +65,7 @@ write-host -f Green "Successfully loaded appsettings.json"
 # Exporting Lists and Data
 # ===========================
 
-Connect-PnPOnline -Url $SourceSiteURL -Interactive -ClientId "2407e12d-6a66-44b2-b9af-f207b7f0ea7d"
+Connect-PnPOnline -Url $SourceSiteURL -Interactive -ClientId $ClientId
 $Context  = Get-PnPContext
 
 If ($Context) {
@@ -93,10 +93,13 @@ Function ExportLists {
         }
     }
     Catch {
-        write-host -f Red "Error saving List '$ListName' as template!" $_.Exception.Message
+        write-host -f Red "Error saving Lists as a template." $_.Exception.Message
+        Exit
     }
 }
 
 ExportLists $ListsToExport $ExportFileName $IncludeData
 
 Write-Host -f Green "All Lists have been successfully exported to '$OutputFolder/$ExportFileName.$ExtensionType'"
+
+Disconnect-PnPOnline
