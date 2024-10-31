@@ -36,6 +36,7 @@ These steps are necessary to ensure the application has the required permissions
 
 1. Copy the `appsettings.template.json` file and rename it to `appsettings.json`.
 2. Open the `appsettings.json` file and update the values as needed.
+    - If you wish to only use one script, skip the other specific Settings. E.g. I only want to Import, then don't fill out the ExportSettings.
 
 ## Running the Scripts
 
