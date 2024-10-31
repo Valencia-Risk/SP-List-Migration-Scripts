@@ -1,0 +1,11 @@
+# List Export/Import Folder
+/data
+
+appsettings.json
+
+# IDE Settings
+*.code-workspace
+/.idea
+
+# MacOS
+.DS_Store
