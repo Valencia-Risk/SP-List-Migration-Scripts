@@ -23,12 +23,17 @@ These steps are necessary to ensure the scripts in this repository run correctly
 
 ### Entra ID App Registration
 
+This step is only required on one Tenant as we use a Multi-Tenant setup. Meaning if I'm doing a full migration, I can just set up the App Registration in tenant 1 and I'll be asked for approval/consent when I sign into tenant 2.
+
+*If you've been provided a Client ID from someone else, like Valencia Risk, skip the Entra ID App Registration and enter the provided ID into the appsettings.json.*
+
 * Set up a multi-tenant application in Entra ID.
 * Configure the following delegated API permissions for the application:
   * `Graph - Sites.FullControl.All`
   * `SharePoint - AllSites.FullControl`
-* Ensure the `ClientId` in the `appsettings.json` file matches the application registration's client ID.
-* A client-secret is not needed as it's Multi-Tenant and uses Delegated permissions.
+* Grant Admin Approval for all API permissions.
+* Ensure the `ClientId` in the `appsettings.json` file matches the application registration's client ID. See next section.
+* A client-secret is not needed as it's Multi-Tenant and uses Delegated permissions. Meaning we get the token and tenant via the User sign in.
 
 These steps are necessary to ensure the application has the required permissions to access and manage SharePoint sites and lists.
 
@@ -36,7 +41,7 @@ These steps are necessary to ensure the application has the required permissions
 
 1. Copy the `appsettings.template.json` file and rename it to `appsettings.json`.
 2. Open the `appsettings.json` file and update the values as needed.
-    - If you wish to only use one script, skip the other specific Settings. E.g. I only want to Import, then don't fill out the ExportSettings.
+    - If you wish to only use one script, skip the other specific settings. E.g. You only want to Import, then don't fill out the ExportSettings.
 
 ## Running the Scripts
 
